@@ -4,7 +4,7 @@ import logger from "./middlewares/logger.js";
 import helmet from "helmet";
 import morgan from "morgan";
 import debug from 'debug';
-import router from './routes/movies.js';
+import router from './routes/index.js';
 
 const app = express();
 
