@@ -45,4 +45,50 @@ async function getCourses() {
     
 }
 
-getCourses();
+// queries
+// eq - equal
+// ne - not equal
+// gt - greater than
+// gte - greater than or equal to
+// lt - less than
+// lte - less than or equal to
+// in - inside
+// nin - not inside
+
+async function getCoursesQueries() {
+    const courses = await Course
+        .find({ name: { $eq: 'Angular Course' } })
+        .limit(10)
+        .sort({ name: 1}) // 1 is ascending order
+        .select({ name: 1, tags: 1}) // 1 is true
+    console.log(courses)
+}
+// count
+async function getCoursesCount() {
+    const courses = await Course
+        .find({ name: { $eq: 'Angular Course' } })
+        .limit(10)
+        .sort({ name: 1}) // 1 is ascending order
+        .count()
+    console.log(courses)
+}
+
+// pagination
+async function getCoursesPagination() {
+    // this params should be recieved
+    const pageNumber = 1;
+    const pageSize = 10;
+
+    const courses = await Course
+        .find({ author: 'Julian', isPublished: true })
+        .skip((pageNumber - 1) * pageSize)
+        .limit(pageSize)
+        .sort({ name: 1}) // 1 is ascending order
+        .select({ name: 1, tags: 1})
+    console.log(courses)
+}
+
+//getCourses();
+//getCoursesQueries();
+//getCoursesCount();
+getCoursesPagination();
