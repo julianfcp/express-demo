@@ -91,4 +91,46 @@ async function getCoursesPagination() {
 //getCourses();
 //getCoursesQueries();
 //getCoursesCount();
-getCoursesPagination();
+//getCoursesPagination();
+
+
+//updae coruses query first
+async function updateCourse1(id) {
+    const course = await Course.findById(id);
+    if(!course) return;
+    // update properties
+    course.set({
+        isPublished: true,
+        author: 'Another Author',
+    });
+    const result = await course.save();
+    console.log(result);
+}
+
+//updateCourse1('6626fa14f80b8d02d4db59a4');
+
+// update first - directly
+async function updateCourse2(id) {
+    const result = await Course.updateOne({ _id: id }, {
+        $set: {
+            author: 'Coffee',
+            isPublished: false
+        }
+    });
+    console.log(result)
+}
+
+//updateCourse2('6626fa14f80b8d02d4db59a4');
+
+// update first - directly findbyID
+async function updateCourse3(id) {
+    const result = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: 'Tekila',
+            isPublished: true
+        }
+    }, {new: true});
+    console.log(result)
+}
+
+updateCourse3('6626fa14f80b8d02d4db59a4');
