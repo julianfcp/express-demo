@@ -5,8 +5,16 @@ mongoose.connect('mongodb://localhost/playground')
     .catch(err => console.log("Error: ", err))
 
 // create schema
-const courseSchema = new mongoose.Schema({
+/* const courseSchema = new mongoose.Schema({
     name: String,
+    author: String,
+    tags: [ String ],
+    date: { type: Date, default: Date.now },
+    isPublished: Boolean
+}) */
+// create schema with validators
+const courseSchema = new mongoose.Schema({
+    name: { type: String, required: true},
     author: String,
     tags: [ String ],
     date: { type: Date, default: Date.now },
@@ -28,8 +36,14 @@ async function createCourse() {
         isPublished: true,
     })
 
-    const result = await course.save();
-    console.log(result);
+    try {
+        const result = await course.save();
+        console.log(result);
+    } catch (error) {
+        console.log(error.message)
+    }
+
+    
 }
 
 //createCourse();
@@ -134,3 +148,12 @@ async function updateCourse3(id) {
 }
 
 updateCourse3('6626fa14f80b8d02d4db59a4');
+
+
+// REmove
+async function removeCourse(id) {
+    const course = await Course.findByIdAndDelete(id);
+    console.log(course);
+}
+
+//removeCourse('6626fa14f80b8d02d4db59a4');
